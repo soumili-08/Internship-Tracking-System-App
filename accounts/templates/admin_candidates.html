@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-container">
+    <h2 class="title">Candidate Users & Test Results</h2>
+
+    <div class="candidates-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Joined</th>
+                    <th>Test Category</th>
+                    <th>Score</th>
+                    <th>Total</th>
+                    <th>Date Taken</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidate in candidates %}
+                    {% if candidate.usertestresult_set.all %}
+                        {% for result in candidate.usertestresult_set.all %}
+                        <tr>
+                            <td>{{ candidate.email }}</td>
+                            <td>{{ candidate.created_at|date:"M d, Y" }}</td>
+                            <td>{{ result.category.name }}</td>
+                            <td>{{ result.score }}</td>
+                            <td>{{ result.total }}</td>
+                            <td>{{ result.date_taken|date:"M d, Y - H:i" }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>{{ candidate.email }}</td>
+                            <td>{{ candidate.created_at|date:"M d, Y" }}</td>
+                            <td colspan="4" style="text-align:center; color: #aaa;">
+                                No test results
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% empty %}
+                    <tr>
+                        <td colspan="6">No candidates found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <div class="back-btn-container">
+        <a href="{% url 'admin_dashboard' %}" class="btn-back">← Back to Dashboard</a>
+    </div>
+</div>
+
+<style>
+.dashboard-container {
+    background: #0d0d0d;
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 1000px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+.title {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #1e90ff;
+}
+.candidates-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border: 1px solid #1e90ff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.candidates-table th, .candidates-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #1e90ff;
+}
+.candidates-table th {
+    background: #1a1a1a;
+    color: #1e90ff;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.candidates-table tr:nth-child(even) {
+    background: #141414;
+}
+.candidates-table tr:hover {
+    background: #1e1e1e;
+}
+.back-btn-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.btn-back {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #1e90ff;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+.btn-back:hover {
+    background: #0b63c9;
+}
+</style>
+{% endblock %}

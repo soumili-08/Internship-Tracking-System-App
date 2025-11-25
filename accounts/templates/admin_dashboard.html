@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        background-color: #000; /* Black background */
+        font-family: 'Segoe UI', sans-serif;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .dashboard-container {
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+    }
+
+    .dashboard-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #4da6ff; /* Light blue title */
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .dashboard-card {
+        background: #111;
+        border: 2px solid #4da6ff;
+        border-radius: 12px;
+        padding: 30px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .dashboard-card a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: bold;
+        display: block;
+    }
+
+    .dashboard-card:hover {
+        background: #1a1a1a;
+        transform: translateY(-5px);
+        box-shadow: 0px 0px 15px rgba(77, 166, 255, 0.6);
+    }
+</style>
+
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Admin Dashboard</h1>
+    <div class="dashboard-grid">
+        <div class="dashboard-card">
+            <a href="{% url 'admin_candidates' %}">View Candidates</a>
+        </div>
+        <div class="dashboard-card">
+            <a href="{% url 'admin_companies' %}">View Companies</a>
+        </div>
+        <div class="dashboard-card">
+            <a href="{% url 'admin_add_question' %}">Add Questions</a>
+        </div>
+        <div class="dashboard-card">
+            <a href="{% url 'admin_questions' %}">Questions</a>
+        </div>
+        <div class="dashboard-card">
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

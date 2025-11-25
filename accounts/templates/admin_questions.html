@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-container">
+    <h2 class="title">Manage Questions</h2>
+
+    <!-- Back to Dashboard Button -->
+    <div class="back-btn-container">
+        <a href="{% url 'admin_dashboard' %}" class="btn-back">← Back to Dashboard</a>
+    </div>
+
+    <div class="questions-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Question</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in questions %}
+                <tr>
+                    <td>{{ q.id }}</td>
+                    <td>{{ q.category.name }}</td>
+                    <td>{{ q.question_text|truncatewords:10 }}</td>
+                    <td>
+                        <a class="btn-edit" href="{% url 'edit_question' q.id %}">Edit</a>
+                        <a class="btn-delete" href="{% url 'delete_question' q.id %}">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No questions available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+.dashboard-container {
+    background: #0d0d0d;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+.title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #1e90ff;
+}
+.back-btn-container {
+    text-align: left;
+    margin-bottom: 15px;
+}
+.btn-back {
+    display: inline-block;
+    padding: 8px 15px;
+    background: #1e90ff;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+.btn-back:hover {
+    background: #0b63c9;
+}
+.questions-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border: 1px solid #1e90ff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.questions-table th, .questions-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #1e90ff;
+}
+.questions-table th {
+    background: #1a1a1a;
+    color: #1e90ff;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.questions-table tr:nth-child(even) {
+    background: #141414;
+}
+.questions-table tr:hover {
+    background: #1e1e1e;
+}
+.btn-edit, .btn-delete {
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.btn-edit {
+    background: #1e90ff;
+    color: white;
+}
+.btn-delete {
+    background: #ff4444;
+    color: white;
+}
+.btn-edit:hover {
+    background: #0b63c9;
+}
+.btn-delete:hover {
+    background: #cc0000;
+}
+</style>
+{% endblock %}

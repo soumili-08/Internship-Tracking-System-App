@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="result-container">
+
+  <!-- Back Button -->
+  <a href="{% url 'test_categories' %}" class="btn-back">← Back</a>
+
+  <h2 class="result-title">{{ result.category.name }} - Test Result</h2>
+
+  <!-- Result Summary -->
+  <div class="summary-box">
+    <p><strong>Candidate:</strong> {{ result.user.email }}</p>
+    <p><strong>Score:</strong> {{ result.score }} / {{ result.total }}</p>
+    <p><strong>Date Taken:</strong> {{ result.date_taken|date:"F j, Y, g:i a" }}</p>
+  </div>
+
+  <hr class="divider">
+
+  <h3 class="review-title">Review Your Answers</h3>
+
+  {% for ans in answers %}
+    <div class="question-box">
+      <p class="question-text"><strong>Q{{ forloop.counter }}. {{ ans.question.question_text }}</strong></p>
+      <ul class="options-list">
+        <li class="
+          {% if ans.question.correct_option == 'option1' %} correct
+          {% elif ans.selected_option == 'option1' %} wrong
+          {% endif %}
+        ">
+          {{ ans.question.option1 }}
+        </li>
+        <li class="
+          {% if ans.question.correct_option == 'option2' %} correct
+          {% elif ans.selected_option == 'option2' %} wrong
+          {% endif %}
+        ">
+          {{ ans.question.option2 }}
+        </li>
+        <li class="
+          {% if ans.question.correct_option == 'option3' %} correct
+          {% elif ans.selected_option == 'option3' %} wrong
+          {% endif %}
+        ">
+          {{ ans.question.option3 }}
+        </li>
+        <li class="
+          {% if ans.question.correct_option == 'option4' %} correct
+          {% elif ans.selected_option == 'option4' %} wrong
+          {% endif %}
+        ">
+          {{ ans.question.option4 }}
+        </li>
+      </ul>
+    </div>
+  {% endfor %}
+
+</div>
+
+<style>
+/* Background */
+body {
+  background: linear-gradient(135deg, #000000, #0a1a2f);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container */
+.result-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+}
+
+/* Back Button */
+.btn-back {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background: #ff1e56;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(255, 30, 86, 0.7);
+  transition: 0.3s;
+}
+.btn-back:hover {
+  background: #cc1244;
+  box-shadow: 0 0 20px rgba(255, 30, 86, 1);
+}
+
+/* Title */
+.result-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 25px;
+  color: #f6eef0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Summary Box */
+.summary-box {
+  background: rgba(255, 30, 86, 0.1);
+  border: 2px solid #ff1e56;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 15px rgba(255, 30, 86, 0.7);
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Divider */
+.divider {
+  border: 0;
+  height: 2px;
+  background: #ff1e56;
+  margin: 25px 0;
+}
+
+/* Review Title */
+.review-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ff6f91;
+}
+
+/* Question Box */
+.question-box {
+  background: transparent;
+  border: 2px solid #ff1e56;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: 0 0 12px rgba(255, 30, 86, 0.8);
+}
+
+.question-text {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Options */
+.options-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.options-list li {
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin: 6px 0;
+}
+
+/* Correct & Wrong styles */
+.correct {
+  color: #00ff7f;
+  font-weight: bold;
+  text-shadow: 0 0 8px #00ff7f;
+}
+
+.wrong {
+  color: #ff4d6d;
+  font-weight: bold;
+  text-shadow: 0 0 8px #ff1e56;
+}
+</style>
+{% endblock %}

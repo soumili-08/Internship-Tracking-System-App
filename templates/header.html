@@ -1,0 +1,118 @@
+<section class="homepage-header">
+  <!-- Buttons / Navigation -->
+  <div class="homepage-header-buttons">
+      {% if user.is_authenticated %}
+          {% if user.role == "company" %}
+              <a href="{% url 'create_advert' %}">Create Advert</a>
+              <a href="{% url 'my_jobs' %}">My Jobs</a>
+              <a href="{% url 'logout' %}">Logout</a>
+          {% elif user.role == "candidate" %}
+              <a href="{% url 'my_applications' %}">My Applications</a>
+              <a href="{% url 'test_categories' %}">Tests</a>
+              <a href="{% url 'logout' %}">Logout</a>
+          {% elif user.role == "admin" %}
+              <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+              <a href="{% url 'logout' %}">Logout</a>
+          {% endif %}
+      {% else %}
+          <a href="{% url 'company_login' %}">Company Login</a>
+          <a href="{% url 'candidate_login' %}">Candidate Login</a>
+          <a href="{% url 'register' %}">Register</a>
+          <a href="javascript:void(0);" id="adminBtn">Admin</a> <!-- Admin Modal Button -->
+      {% endif %}
+  </div>
+
+  <!-- Header Text -->
+  <h1>Find Your Dream Job <a style="font-size: larger;" href="/">🏠</a></h1>
+  <p>The swift way to hire, the smart way to find offers.</p>
+
+  <!-- Alerts Section -->
+  <div style="display: flex; align-items: center; justify-content: center;">
+      {% include 'alerts.html' %}
+  </div>
+
+  <!-- Admin Modal -->
+  <div id="adminModal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Admin Login</h2>
+          <form method="POST" action="{% url 'admin_login_modal' %}">
+              {% csrf_token %}
+              <label>Email:</label><br>
+              <input type="email" name="email" required><br>
+              <label>Password:</label><br>
+              <input type="password" name="password" required><br><br>
+              <button type="submit">Login</button>
+          </form>
+          {% if messages %}
+              {% for message in messages %}
+                  <p style="color:red;">{{ message }}</p>
+              {% endfor %}
+          {% endif %}
+      </div>
+  </div>
+</section>
+
+<!-- Header Buttons CSS -->
+<style>
+.homepage-header-buttons a {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #8B2C42; /* Maroon red */
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  margin: 5px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.homepage-header-buttons a:hover {
+  background-color: #6A1E32; /* Darker hover */
+  transform: scale(1.05);
+}
+</style>
+
+<!-- Modal CSS -->
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close:hover { color: black; }
+</style>
+
+<!-- Modal JS -->
+<script>
+var modal = document.getElementById("adminModal");
+var btn = document.getElementById("adminBtn");
+var span = document.getElementsByClassName("close")[0];
+
+if(btn){  
+    btn.onclick = function() { modal.style.display = "block"; }
+}
+
+span.onclick = function() { modal.style.display = "none"; }
+window.onclick = function(event) {
+  if (event.target == modal) { modal.style.display = "none"; }
+}
+</script>

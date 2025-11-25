@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+    <h2>Edit Question</h2>
+
+    <!-- Back to Dashboard Button -->
+    <div class="back-btn-container">
+        <a href="{% url 'admin_questions' %}" class="btn-back">← Back</a>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-save">Save</button>
+        <a href="{% url 'admin_questions' %}" class="btn-cancel">Cancel</a>
+    </form>
+</div>
+
+<style>
+.form-container {
+    background: #0d0d0d;
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+.form-container h2 {
+    color: #1e90ff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.back-btn-container {
+    text-align: left;
+    margin-bottom: 15px;
+}
+.btn-back {
+    display: inline-block;
+    padding: 8px 15px;
+    background: #1e90ff;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+.btn-back:hover {
+    background: #0b63c9;
+}
+form p {
+    margin: 10px 0;
+}
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    background: #1a1a1a;
+    color: white;
+    border: 1px solid #1e90ff;
+    border-radius: 8px;
+}
+.btn-save, .btn-cancel {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 10px;
+}
+.btn-save {
+    background: #1e90ff;
+    color: white;
+}
+.btn-cancel {
+    background: #ff4444;
+    color: white;
+}
+.btn-save:hover {
+    background: #0b63c9;
+}
+.btn-cancel:hover {
+    background: #cc0000;
+}
+</style>
+{% endblock %}

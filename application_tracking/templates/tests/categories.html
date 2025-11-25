@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="category-page">
+  <h2 class="title">Select a Test Category</h2>
+
+  <div class="category-grid">
+    {% for cat in categories %}
+      <a href="{% url 'take_test' cat.id %}" 
+         class="category-card {% if cat.name == 'Math' or cat.name == 'Coding' %}blue-card{% else %}white-card{% endif %}">
+        {{ cat.name }}
+      </a>
+    {% empty %}
+      <p class="no-category">No test categories available.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Back Button -->
+  <div class="back-container">
+    <a href="{% url 'candidate_home' %}" class="back-btn">← Back</a>
+  </div>
+</div>
+
+<style>
+/* Full background */
+.category-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000; /* Black */
+    padding: 20px;
+}
+
+/* Title */
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff; /* White text */
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Grid */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+/* Common card style */
+.category-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255,255,255,0.2);
+}
+
+/* Blue cards (Math, Coding) */
+.blue-card {
+    background-color: #1E90FF; /* Blue */
+    color: white;
+}
+
+/* White cards (Aptitude, English) */
+.white-card {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Hover effects */
+.category-card:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 15px rgba(255,255,255,0.5);
+}
+
+/* Back button */
+.back-container {
+    margin-top: 20px;
+    text-align: center;
+}
+.back-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #1E90FF; /* Blue */
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.back-btn:hover {
+    background-color: #4682B4; /* Darker blue on hover */
+    transform: scale(1.05);
+}
+</style>
+{% endblock %}
